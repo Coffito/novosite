@@ -2970,10 +2970,24 @@ table.adminlist th a {
 .logo-image {
   overflow: hidden;
 }
+
+/*
+ * Adaptando a largura e altura dos links da classe logo-image
+ * para que a logo do Coffito amplie até um tamanho mais legível e 
+ * com pouca perda de qualidade.
+ *
+ * Até o momento não foram localizados arquivos de Corel ou Photoshop
+ * com boa qualidade para exportar jpegs melhores.
+ *
+ * Portanto os valores de width e height foram fixados para limitar o crescimento.
+ *
+ * Comentário inserido em: 06/06/2014.
+ * Autor: Vinicius Botelho Dorini Ramos.
+ */
 .logo-image a {
   background-repeat: no-repeat;
-  width: 204px;
-  height: 65px;
+  width: 329px;
+  height: 100px;
 }
 .logo-image span,
 .logo-image small {
