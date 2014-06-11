@@ -5,7 +5,7 @@ class JConfig {
 	public $display_offline_message = '1';
 	public $offline_image = '';
 	public $sitename = 'COFFITO';
-	public $editor = 'tinymce';
+	public $editor = 'jckeditor';
 	public $captcha = '0';
 	public $list_limit = '20';
 	public $access = '1';
@@ -28,7 +28,7 @@ class JConfig {
 	public $ftp_pass = '';
 	public $ftp_root = '';
 	public $ftp_enable = '0';
-	public $offset = 'UTC';
+	public $offset = 'America/Sao_Paulo';
 	public $mailonline = '1';
 	public $mailer = 'smtp';
 	public $mailfrom = 'ti@coffito.org.br';
