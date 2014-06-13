@@ -97,6 +97,8 @@
 		<position>footer-9</position>
 		<position>footer-10</position>
 		<position>debug</position>
+		<!-- Adicionando uma nova posicao para trabalhar com o acymailing em artigos -->
+		<position>posicao-acymailing</position>
 	</positions>
 
 	<config>

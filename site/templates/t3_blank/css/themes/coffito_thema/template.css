@@ -2986,9 +2986,10 @@ table.adminlist th a {
  */
 .logo-image a {
   background-repeat: no-repeat;
-  width: 329px;
-  height: 100px;
+  width: 435px;
+  height: 115px;
 }
+
 .logo-image span,
 .logo-image small {
   display: none;
