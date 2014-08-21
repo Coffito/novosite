@@ -3,7 +3,7 @@
  * NoNumber Framework Helper File: Assignments: HikaShop
  *
  * @package         NoNumber Framework
- * @version         14.4.1
+ * @version         14.8.4
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
@@ -56,22 +56,7 @@ class NNFrameworkAssignmentsHikaShop
 			return $parent->pass(0, $assignment);
 		}
 
-		$cats = array();
-		if ($parent->params->view == 'category')
-		{
-			$cats = $parent->params->id;
-		}
-		else if ($parent->params->id)
-		{
-			$parent->q->clear()
-				->select('c.category_id')
-				->from('#__hikashop_product_category AS c')
-				->where('c.product_id = ' . (int) $parent->params->id);
-			$parent->db->setQuery($parent->q);
-			$cats = $parent->db->loadColumn();
-		}
-
-		$cats = $parent->makeArray($cats);
+		$cats = $this->getCategories($parent);
 
 		$pass = $parent->passSimple($cats, $selection, 'include');
 
@@ -98,6 +83,37 @@ class NNFrameworkAssignmentsHikaShop
 		}
 
 		return $parent->passSimple($parent->params->id, $selection, $assignment);
+	}
+
+	function getCategories(&$parent)
+	{
+		switch (true)
+		{
+			case ($parent->params->view == 'category' && $parent->params->id):
+
+				return array($parent->params->id);
+				break;
+			case ($parent->params->view == 'category'):
+				include_once JPATH_ADMINISTRATOR . '/components/com_hikashop/helpers/helper.php';
+				$menuClass = hikashop_get('class.menus');
+				$menuData = $menuClass->get($parent->params->Itemid);
+
+				return $parent->makeArray($menuData->hikashop_params['selectparentlisting']);
+				break;
+
+			case ($parent->params->id):
+				$parent->q->clear()
+					->select('c.category_id')
+					->from('#__hikashop_product_category AS c')
+					->where('c.product_id = ' . (int) $parent->params->id);
+				$parent->db->setQuery($parent->q);
+				$cats = $parent->db->loadColumn();
+
+				return $parent->makeArray($cats);
+				break;
+			default:
+				return array();
+		}
 	}
 
 	function getCatParentIds(&$parent, $id = 0)

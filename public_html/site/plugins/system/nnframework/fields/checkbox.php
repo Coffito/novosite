@@ -4,7 +4,7 @@
  * Displays options as checkboxes
  *
  * @package         NoNumber Framework
- * @version         14.4.1
+ * @version         14.8.4
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
@@ -80,11 +80,11 @@ class JFormFieldNN_Checkbox extends JFormField
 			$checkers = array();
 			if ($showcheckall)
 			{
-				$checkers[] = '<input id="nn_checkall_' . $this->id . '" type="checkbox" onclick="NNFrameworkCheckAll( this, \'nn_' . $this->id . '\' );" /> ' . JText::_('JALL');
+				$checkers[] = '<input id="nn_checkall_' . $this->id . '" type="checkbox" onclick=" nnScripts.checkAll( this, \'nn_' . $this->id . '\' );" /> ' . JText::_('JALL');
 
 				$js = "
 					jQuery(document).ready(function() {
-						jQuery('nn_checkall_" . $this->id . "').checked = NNFrameworkAllChecked( 'nn_" . $this->id . "' );
+						nnScripts.initCheckAlls('nn_checkall_" . $this->id . "', 'nn_" . $this->id . "');
 					});
 				";
 				JFactory::getDocument()->addScriptDeclaration($js);

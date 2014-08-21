@@ -4,7 +4,7 @@
  * Displays plain text as element
  *
  * @package         NoNumber Framework
- * @version         14.4.1
+ * @version         14.8.4
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
@@ -29,43 +29,39 @@ class JFormFieldNN_PlainText extends JFormField
 		JHtml::stylesheet('nnframework/style.min.css', false, true);
 
 		$this->params = $this->element->attributes();
+
 		$label = $this->prepareText($this->get('label'));
+		$tooltip = $this->prepareText(trim($this->get('description')));
 
-		$description = (trim($this->value) != '') ? trim($this->value) : $this->get('description');
-		$description = $this->prepareText($description);
-
-		if (!$label && !$description)
+		if (!$label && !$tooltip)
 		{
 			return '';
 		}
 
 		if (!$label)
 		{
-			return '<div>' . $description . '</div>';
+			return '<div>' . $tooltip . '</div>';
 		}
 
-		if (!$description)
+		if (!$tooltip)
 		{
 			return '<div>' . $label . '</div>';
 		}
 
-		return '<label class="hasTooltip" title="' . htmlentities($description) . '">'
+		return '<label class="hasTooltip" title="<strong>' . $label . '</strong><br />' . htmlentities($tooltip) . '">'
 		. $label . '</label>';
 	}
 
 	protected function getInput()
 	{
-		$label = $this->prepareText($this->get('label'));
+		$text = $this->prepareText(trim($this->value));
 
-		$description = (trim($this->value) != '') ? trim($this->value) : $this->get('description');
-		$description = $this->prepareText($description);
-
-		if (!$label || !$description)
+		if (!$text)
 		{
 			return '';
 		}
 
-		return '<fieldset class="nn_plaintext">' . $description . '</fieldset>';
+		return '<fieldset class="nn_plaintext">' . $text . '</fieldset>';
 	}
 
 	private function prepareText($str = '')

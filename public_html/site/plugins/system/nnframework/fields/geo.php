@@ -4,7 +4,7 @@
  * Displays a multiselectbox of geo locations
  *
  * @package         NoNumber Framework
- * @version         14.4.1
+ * @version         14.8.4
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
@@ -51,11 +51,12 @@ class JFormFieldNN_Geo extends JFormField
 			}
 		}
 
-		$attr = '';
-		$attr .= $this->get('size') ? ' size="' . (int) $this->get('size') . '"' : '';
-		$attr .= $this->get('multiple') ? ' multiple="multiple"' : '';
+		$size = (int) $this->get('size');
+		$multiple = $this->get('multiple');
 
-		return JHtml::_('select.genericlist', $options, $this->name, trim($attr), 'value', 'text', $this->value, $this->id);
+		require_once JPATH_PLUGINS . '/system/nnframework/helpers/html.php';
+
+		return nnHtml::selectlistsimple($options, $this->name, $this->value, $this->id, $size, $multiple);
 	}
 
 	private function get($val, $default = '')

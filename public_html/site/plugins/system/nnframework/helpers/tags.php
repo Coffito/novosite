@@ -3,7 +3,7 @@
  * NoNumber Framework Helper File: Tags
  *
  * @package         NoNumber Framework
- * @version         14.4.1
+ * @version         14.8.4
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
@@ -18,26 +18,30 @@ defined('_JEXEC') or die;
  */
 class NNTags
 {
-	public static function getTagValues($str = '', $keys = array('title'), $separator = '|', $equal = ':', $limit = 0)
+	public static function getTagValues($str = '', $keys = array('title'), $separator = '|', $equal = '=', $limit = 0)
 	{
 		$s = '[[S]]';
 		$e = '[[E]]';
 		$t1 = '[[T]]';
 		$t2 = '[[/T]]';
 
-		// protect all html tags
-		if (preg_match_all('#</?[a-z][^>]*>#si', $str, $matches, PREG_SET_ORDER) > 0)
-		{
-			foreach ($matches as $match)
-			{
-				$str = str_replace($match['0'], $t1 . base64_encode($match['0']) . $t2, $str);
-			}
-		}
-
 		// replace separators and equal signs with special markup
 		$str = str_replace(array($separator, $equal), array($s, $e), $str);
 		// replace protected separators and equal signs back to original
 		$str = str_replace(array('\\' . $s, '\\' . $e), array($separator, $equal), $str);
+
+		// protect all html tags
+		if (preg_match_all('#</?[a-z][^>]*>#si', $str, $tags, PREG_SET_ORDER) > 0)
+		{
+			foreach ($tags as $tag)
+			{
+				$str = str_replace(
+					$tag['0'],
+					$t1 . base64_encode(str_replace(array($s, $e), array($separator, $equal), $tag['0'])) . $t2,
+					$str
+				);
+			}
+		}
 
 		// split string into array
 		if ($limit)
@@ -66,11 +70,11 @@ class NNTags
 			// unprotect tags in key and val
 			foreach ($keyval as $k => $v)
 			{
-				if (preg_match_all('#' . preg_quote($t1, '#') . '(.*?)' . preg_quote($t2, '#') . '#si', $v, $matches, PREG_SET_ORDER) > 0)
+				if (preg_match_all('#' . preg_quote($t1, '#') . '(.*?)' . preg_quote($t2, '#') . '#si', $v, $tags, PREG_SET_ORDER) > 0)
 				{
-					foreach ($matches as $match)
+					foreach ($tags as $tag)
 					{
-						$v = str_replace($match['0'], base64_decode($match['1']), $v);
+						$v = str_replace($tag['0'], base64_decode($tag['1']), $v);
 					}
 					$keyval[trim($k)] = $v;
 				}
@@ -110,14 +114,19 @@ class NNTags
 	{
 		if ($tags == 0)
 		{
+			// tags that have a matching ending tag
 			$tags = array(
 				'div', 'p', 'span', 'pre', 'a',
 				'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
-				'strong', 'b', 'em', 'i', 'u', 'big', 'small', 'font'
+				'strong', 'b', 'em', 'i', 'u', 'big', 'small', 'font',
+				// html 5 stuff
+				'header', 'nav', 'section', 'article', 'aside', 'footer',
+				'figure', 'figcaption', 'details', 'summary', 'mark', 'time'
 			);
 		}
 		$a = explode('<', $pre);
 		$b = explode('</', $post);
+
 		if (count($b) > 1 && count($a) > 1)
 		{
 			$a = array_reverse($a);

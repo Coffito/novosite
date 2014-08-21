@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension version="2.5" type="plugin" group="system" method="upgrade">
-	<name>plg_system_advancedmodules</name>
+	<name>PLG_SYSTEM_ADVANCEDMODULES</name>
 	<description>PLG_SYSTEM_ADVANCEDMODULES_DESC</description>
-	<version>4.13.1FREE</version>
-	<creationDate>April 2014</creationDate>
+	<version>4.16.6FREE</version>
+	<creationDate>August 2014</creationDate>
 	<author>NoNumber (Peter van Westen)</author>
 	<authorEmail>peter@nonumber.nl</authorEmail>
 	<authorUrl>http://www.nonumber.nl</authorUrl>
@@ -32,7 +32,6 @@
 				<field name="@header" type="nn_header"
 					label="ADVANCED_MODULE_MANAGER"
 					description="ADVANCED_MODULE_MANAGER_DESC"
-					xml="/plugins/system/advancedmodules/advancedmodules.xml"
 					url="http://www.nonumber.nl/advancedmodulemanager" />
 
 				<field name="@notice_settings" type="nn_plaintext" label="AMM_SETTINGS" />

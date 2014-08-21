@@ -3,7 +3,7 @@
  * Adds slide in and out functionality to elements based on an elements value
  *
  * @package         NoNumber Framework
- * @version         14.4.1
+ * @version         14.8.4
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
@@ -147,7 +147,14 @@
 				for (el_name in toggler.elements) {
 					var vals = toggler.elements[el_name];
 					var values = this.elements[el_name].values;
-					if (values != null && values.length && ( ( vals == '*' && values != '' ) || nnScripts.in_array(vals, values) )) {
+					if (
+						values != null && values.length
+						&& (
+						(vals == '*' && values != '')
+						|| (vals.toString().substr(0, 1) === '!' && !nnScripts.in_array(vals.toString().substr(1), values))
+						|| nnScripts.in_array(vals, values)
+						)
+					) {
 						if (toggler.method == 'or') {
 							show = 1;
 							break;

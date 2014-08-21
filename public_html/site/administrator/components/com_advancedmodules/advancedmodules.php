@@ -1,7 +1,7 @@
 <?php
 /**
  * @package         Advanced Module Manager
- * @version         4.13.1
+ * @version         4.16.6
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
@@ -43,7 +43,7 @@ $nnep = JPluginHelper::getPlugin('system', 'nnframework');
 if (!isset($nnep->name))
 {
 	$msg = JText::_('AMM_NONUMBER_FRAMEWORK_NOT_ENABLED')
-		. ' ' . JText::sprintf('AMM_EXTENSION_MAY_NOT_FUNCTION', JText::_('COM_ADVANCEDMODULES'));
+		. ' ' . JText::sprintf('AMM_EXTENSION_CAN_NOT_FUNCTION', JText::_('COM_ADVANCEDMODULES'));
 	JFactory::getApplication()->enqueueMessage($msg, 'notice');
 }
 

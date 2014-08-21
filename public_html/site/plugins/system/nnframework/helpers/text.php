@@ -3,7 +3,7 @@
  * NoNumber Framework Helper File: Text
  *
  * @package         NoNumber Framework
- * @version         14.4.1
+ * @version         14.8.4
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
@@ -124,6 +124,8 @@ class NNText
 		{
 			// remove html tags
 			$str = preg_replace('#</?[a-z][^>]*>#usi', '', $str);
+			// remove comments tags
+			$str = preg_replace('#<\!--.*?-->#us', '', $str);
 		}
 
 		return trim($str);
@@ -163,11 +165,11 @@ class NNText
 		return $pre . $name;
 	}
 
-	public static function strReplaceOnce($s, $r, $str)
+	public static function strReplaceOnce($search, $replace, $str)
 	{
-		$r = str_replace(array('\\', '$'), array('\\\\', '\\$'), $r);
+		$replace = str_replace(array('\\', '$'), array('\\\\', '\\$'), $replace);
 
-		return preg_replace('#' . preg_quote($s, '#') . '#', $r, $str, 1);
+		return preg_replace('#' . preg_quote($search, '#') . '#', $replace, $str, 1);
 	}
 
 	/**
@@ -188,11 +190,71 @@ class NNText
 	/**
 	 * gets attribute from a tag string
 	 */
+	public static function fixHtmlTagStructure(&$str)
+	{
+		// Move div nested inside <p> tags outside of it
+		// input: <p><div>...</div></p>
+		// output: </p><div>...</div><p>
+		$str = preg_replace('#((?:<p(?: [^>]*)?>\s*)?)((?:<br ?/?>)?\s*<div(?: [^>]*)?>.*?</div>\s*(?:<br ?/?>)?)((?:\s*</p>)?)#si', '\3\2\1', $str);
+
+		// Combine duplicate <p> tags
+		nnText::combinePTags($str);
+
+		// Remove duplicate ending </p> tags
+		nnText::removeDuplicateTags($str, '/p');
+	}
+
+	/**
+	 * combine duplicate <p> tags
+	 * input: <p class="aaa" a="1"><!-- ... --><p class="bbb" b="2">
+	 * output: <p class="aaa bbb" a="1" b="2"><!-- ... -->
+	 */
+	public static function combinePTags(&$str)
+	{
+		if (!preg_match_all('#(<p(?: [^>]*)?>)\s*((?:<!--.*?-->\s*)?)(<p(?: [^>]*)?>)#si', $str, $tags, PREG_SET_ORDER) > 0)
+		{
+			return;
+		}
+
+		foreach ($tags as $tag)
+		{
+			$str = str_replace($tag['0'], nnText::combineTags($tag['1'], $tag['3']) . $tag['2'], $str);
+		}
+	}
+
+	/**
+	 * combine tags
+	 */
+	public static function combineTags($tag1, $tag2)
+	{
+		// Return if tags are the same
+		if ($tag1 == $tag2)
+		{
+			return $tag1;
+		}
+
+		if (!preg_match('#<([a-z][a-z0-9]*)#si', $tag1, $tag_type))
+		{
+			return $tag2;
+		}
+
+		$tag_type = $tag_type[1];
+
+		if (!$attribs = nnText::combineAttributes($tag1, $tag2))
+		{
+			return '<' . $tag_type . '>';
+		}
+
+		return '<' . $tag_type . ' ' . $attribs . '>';
+	}
+
+	/**
+	 * gets attribute from a tag string
+	 */
 	public static function getAttribute($attrib, $str)
 	{
 		// get attribute from string
-		$re = '#' . preg_quote($attrib, '#') . '="([^"]*)"#si';
-		if (preg_match($re, $str, $match))
+		if (preg_match('#' . preg_quote($attrib, '#') . '="([^"]*)"#si', $str, $match))
 		{
 			return $match['1'];
 		}
@@ -201,13 +263,84 @@ class NNText
 	}
 
 	/**
+	 * gets attributes from a tag string
+	 */
+	public static function getAttributes($str)
+	{
+		$attribs = array();
+		if (preg_match_all('#([a-z0-9-_]+)="([^"]*)"#si', $str, $matches, PREG_SET_ORDER) > 0)
+		{
+			foreach ($matches as $match)
+			{
+				$attribs[$match['1']] = $match['2'];
+			}
+		}
+
+		return $attribs;
+	}
+
+	/**
+	 * combine attribute values in a tag string
+	 */
+	public static function combineAttributes($string1, $string2)
+	{
+		$attribs1 = is_array($string1) ? $string1 : nnText::getAttributes($string1);
+		$attribs2 = is_array($string2) ? $string2 : nnText::getAttributes($string2);
+
+		$dublicate_attribs = array_intersect_key($attribs1, $attribs2);
+
+		// Fill $attribs with the unique ids
+		$attribs = array_diff_key($attribs1, $attribs2) + array_diff_key($attribs2, $attribs1);
+
+		// Add/combine the duplicate ids
+		$single_value_attributes = array('id');
+		foreach ($dublicate_attribs as $key => $val)
+		{
+			if (in_array($key, $single_value_attributes))
+			{
+				$attribs[$key] = $attribs2[$key];
+				continue;
+			}
+
+			// Combine strings, but remove duplicates
+			// "aaa bbb" + "aaa ccc" = "aaa bbb ccc"
+			$attribs[$key] = implode(' ', explode(' ', $attribs1[$key]) + explode(' ', $attribs2[$key]));
+		}
+
+		foreach ($attribs as $key => &$val)
+		{
+			$val = $key . '="' . $val . '"';
+		}
+
+		return implode(' ', $attribs);
+	}
+
+	/**
+	 * combine duplicate <p> tags
+	 * input: </p><!-- ... --></p>
+	 * output: </p><!-- ... -->
+	 */
+	public static function removeDuplicateTags(&$str, $tag_type = 'p')
+	{
+		$str = preg_replace('#(<' . $tag_type . '(?: [^>]*)?>\s*(<!--.*?-->\s*)?)<' . $tag_type . '(?: [^>]*)?>#si', '\1', $str);
+	}
+
+	/**
 	 * Creates an alias from a string
 	 * Based on stringURLUnicodeSlug method from the unicode slug plugin by infograf768
 	 */
 	public static function createAlias($str)
 	{
+		// Remove < > html entities
+		$str = str_replace(array('&lt;', '&gt;'), '', $str);
+
 		// Convert html entities
 		$str = html_entity_decode($str, ENT_COMPAT, 'UTF-8');
+
+		// remove html tags
+		$str = preg_replace('#</?[a-z][^>]*>#usi', '', $str);
+		// remove comments tags
+		$str = preg_replace('#<\!--.*?-->#us', '', $str);
 
 		// Replace double byte whitespaces by single byte (East Asian languages)
 		$str = preg_replace('/\xE3\x80\x80/', ' ', $str);

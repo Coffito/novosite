@@ -1,7 +1,7 @@
 <?php
 /**
  * @package         Advanced Module Manager
- * @version         4.13.1
+ * @version         4.16.6
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
@@ -10,6 +10,8 @@
  */
 
 defined('JPATH_BASE') or die;
+
+JFormHelper::loadFieldClass('predefinedlist');
 
 /**
  * Selection field for module types

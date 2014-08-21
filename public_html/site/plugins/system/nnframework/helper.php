@@ -3,7 +3,7 @@
  * Plugin Helper File
  *
  * @package         NoNumber Framework
- * @version         14.4.1
+ * @version         14.8.4
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
@@ -13,15 +13,17 @@
 
 defined('_JEXEC') or die;
 
+require_once JPATH_PLUGINS . '/system/nnframework/helpers/functions.php';
+
 /**
- * ...
+ * Helper NoNumber Quick Page stuf (nn_qp=1 in url)
  */
 class plgSystemNNFrameworkHelper
 {
-	function __construct()
+	function render()
 	{
 		$url = JFactory::getApplication()->input->getString('url', '');
-		require_once JPATH_PLUGINS . '/system/nnframework/helpers/functions.php';
+
 		$func = new NNFrameworkFunctions;
 
 		if ($url)
@@ -56,7 +58,7 @@ class plgSystemNNFrameworkHelper
 			'plugins/editors-xtd/sourcerer/sourcerer.inc.php'
 		);
 
-		if (!$file || (in_array($file, $allowed) === false))
+		if (!$file || in_array($file, $allowed) === false)
 		{
 			die;
 		}
@@ -71,6 +73,7 @@ class plgSystemNNFrameworkHelper
 		$_REQUEST['tmpl'] = 'component';
 		JFactory::getApplication()->input->set('option', '1');
 
+		header('Content-Type: text/html; charset=utf-8');
 		JHtml::_('bootstrap.framework');
 		JFactory::getDocument()->addScript(JURI::root(true) . '/administrator/templates/isis/js/template.js');
 		JFactory::getDocument()->addStyleSheet(JURI::root(true) . '/administrator/templates/isis/css/template.css');
@@ -90,14 +93,7 @@ class plgSystemNNFrameworkHelper
 
 		JFactory::getDocument()->setBuffer($html, 'component');
 
-		if (version_compare(JVERSION, '3.2', 'l'))
-		{
-			JFactory::getApplication()->render();
-		}
-		else
-		{
-			nnApplication::render();
-		}
+		nnApplication::render();
 
 		$html = JResponse::toString(JFactory::getApplication()->getCfg('gzip'));
 		$html = preg_replace('#\s*<' . 'link [^>]*href="[^"]*templates/system/[^"]*\.css[^"]*"[^>]* />#s', '', $html);

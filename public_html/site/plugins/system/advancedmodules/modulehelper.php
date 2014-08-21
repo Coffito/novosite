@@ -1,7 +1,7 @@
 <?php
 /**
  * @package         Advanced Module Manager
- * @version         4.13.1
+ * @version         4.16.6
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
@@ -157,6 +157,18 @@ abstract class JModuleHelper
 	public static function renderModule($module, $attribs = array())
 	{
 		static $chrome;
+
+		// Check that $module is a valid module object
+		if (!is_object($module) || !isset($module->module) || !isset($module->params))
+		{
+			if (defined('JDEBUG') && JDEBUG)
+			{
+				JLog::addLogger(array('text_file' => 'jmodulehelper.log.php'), JLog::ALL, array('modulehelper'));
+				JLog::add('JModuleHelper::renderModule($module) expects a module object', JLog::DEBUG, 'modulehelper');
+			}
+
+			return;
+		}
 
 		if (defined('JDEBUG'))
 		{

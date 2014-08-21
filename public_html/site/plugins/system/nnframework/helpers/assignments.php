@@ -3,7 +3,7 @@
  * NoNumber Framework Helper File: Assignments
  *
  * @package         NoNumber Framework
- * @version         14.4.1
+ * @version         14.8.4
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
@@ -30,7 +30,7 @@ class NNFrameworkAssignmentsHelper
 	var $subtype = '';
 	var $cache = array();
 
-	function __construct()
+	public function __construct()
 	{
 		$this->db = JFactory::getDBO();
 		$this->q = $this->db->getQuery(true);
@@ -303,6 +303,24 @@ class NNFrameworkAssignmentsHelper
 		}
 
 		return ($pass) ? 1 : 0;
+	}
+
+	function hasAssignments(&$assignments)
+	{
+		if (empty($assignments))
+		{
+			return 0;
+		}
+
+		foreach ($this->types as $type)
+		{
+			if (isset($assignments[$type]) && isset($assignments[$type]->assignment) && $assignments[$type]->assignment)
+			{
+				return 1;
+			}
+		}
+
+		return 0;
 	}
 
 	function fixAssignment(&$a, $type = '')

@@ -1,7 +1,7 @@
 <?php
 /**
  * @package         Advanced Module Manager
- * @version         4.13.1
+ * @version         4.16.6
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
@@ -28,11 +28,11 @@ jimport('joomla.application.component.view');
  */
 class AdvancedModulesViewPreview extends JViewLegacy
 {
-	function display($tpl = null)
+	public function display($tpl = null)
 	{
-		$editor = JFactory::getEditor();
+		$editor = JFactory::getConfig()->get('editor');
 
-		$this->assignRef('editor', $editor);
+		$this->editor = JEditor::getInstance($editor);
 
 		parent::display($tpl);
 	}

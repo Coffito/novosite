@@ -1,7 +1,7 @@
 <?php
 /**
  * @package         Advanced Module Manager
- * @version         4.13.1
+ * @version         4.16.6
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
@@ -62,7 +62,7 @@ if ($this->config->show_update_notification)
 		<div id="j-main-container">
 			<?php
 			// Search tools bar
-			echo JLayoutHelper::render('joomla.searchtools.default', array('view' => $this));
+			echo JLayoutHelper::render('joomla.searchtools.default', array('view' => $this, 'fullordering' => $listOrder . ' ' . strtoupper($listDirn)));
 			?>
 			<div class="clearfix"></div>
 			<?php $cols = 10; ?>
@@ -168,15 +168,18 @@ if ($this->config->show_update_notification)
 							<?php if ($showcolors) : ?>
 								<td class="center inlist">
 									<?php
-									$color = (isset($item->params->color) && $item->params->color) ? $color = $item->params->color : '';
-									$element = new SimpleXMLElement('
-										<field
+									$color = (isset($item->params->color) && $item->params->color) ? $color = str_replace('##', '#', $item->params->color) : 'none';
+									$element = new SimpleXMLElement(
+										'<field
 											name="color_' . $i . '"
 											type="color"
 											control="simple"
-											default="" onchange="setColor(\'cb' . $i . '\', this)"
-											/>
-									');
+											default=""
+											colors="' . (isset($this->config->main_colors) ? $this->config->main_colors : '') . '"
+											split="4"
+											onchange="setColor(\'cb' . $i . '\', this)"
+											/>'
+									);
 									$element->value = $color;
 									$colorfield->setup($element, $color);
 									echo $colorfield->__get('input');

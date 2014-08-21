@@ -4,7 +4,7 @@
  * Display a menuitem field with a button
  *
  * @package         NoNumber Framework
- * @version         14.4.1
+ * @version         14.8.4
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
@@ -27,6 +27,8 @@ class JFormFieldNN_MenuItems extends JFormField
 
 		$size = (int) $this->get('size');
 		$multiple = $this->get('multiple', 0);
+
+		JFactory::getLanguage()->load('com_menus', JPATH_ADMINISTRATOR);
 
 		require_once JPATH_ADMINISTRATOR . '/components/com_menus/helpers/menus.php';
 		$options = $this->getMenuLinks();
@@ -104,12 +106,18 @@ class JFormFieldNN_MenuItems extends JFormField
 			{
 				if (preg_replace('#[^a-z0-9]#', '', strtolower($link->text)) !== preg_replace('#[^a-z0-9]#', '', $link->alias))
 				{
-					$link->text .= ' [' . $link->alias . ']';
+					$link->text .= ' <small>[' . $link->alias . ']</small>';
 				}
 
 				if ($link->language && $link->language != '*')
 				{
-					$link->text .= ' (' . $link->language . ')';
+					$link->text .= ' <small>(' . $link->language . ')</small>';
+				}
+
+				if ($link->type == 'alias')
+				{
+					$link->text .=' <small>(' . JText::_('COM_MENUS_TYPE_ALIAS') . ')</small>';
+					$link->disable = 1;
 				}
 
 				$rlu[$link->menutype]->links[] = & $link;

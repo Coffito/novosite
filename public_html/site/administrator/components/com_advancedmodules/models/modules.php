@@ -1,7 +1,7 @@
 <?php
 /**
  * @package         Advanced Module Manager
- * @version         4.13.1
+ * @version         4.16.6
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
@@ -76,7 +76,7 @@ class AdvancedModulesModelModules extends JModelList
 		$app = JFactory::getApplication('administrator');
 
 		// Load the filter state.
-		$search = $this->getUserStateFromRequest($this->context . '.filter.search', 'filter_search');
+		$search = trim($this->getUserStateFromRequest($this->context . '.filter.search', 'filter_search'));
 		$this->setState('filter.search', $search);
 
 		$accessId = $this->getUserStateFromRequest($this->context . '.filter.access', 'filter_access', null, 'int');
@@ -113,13 +113,47 @@ class AdvancedModulesModelModules extends JModelList
 		$language = $this->getUserStateFromRequest($this->context . '.filter.language', 'filter_language', '');
 		$this->setState('filter.language', $language);
 
+		$this->getConfig();
+		list($default_ordering, $default_direction) = explode(' ', $this->config->default_ordering, 2);
+
 		// List state information.
-		parent::populateState('position', 'asc');
+		parent::populateState($default_ordering, $default_direction);
+		$this->setState('list.fullordering', $this->config->default_ordering);
 
 		// Load the parameters.
 		$params = JComponentHelper::getParams('com_advancedmodules');
 		$this->setState('params', $params);
 
+	}
+
+	/**
+	 * Method to get the data that should be injected in the form.
+	 *
+	 * @return	mixed	The data for the form.
+	 *
+	 * @since	3.2
+	 */
+	protected function loadFormData()
+	{
+		// Check the session for previously entered form data.
+		$data = JFactory::getApplication()->getUserState($this->context, new stdClass);
+
+		// Pre-fill the list options
+		if (!property_exists($data, 'list'))
+		{
+			$this->getConfig();
+			list($default_ordering, $default_direction) = explode(' ', $this->config->default_ordering, 2);
+			
+			$data->list = array(
+				'direction'    => $default_direction,
+				'limit'        => $this->state->{'list.limit'},
+				'ordering'     => $default_ordering,
+				'fullordering' => $this->config->default_ordering,
+				'start'        => $this->state->{'list.start'}
+			);
+		}
+
+		return $data;
 	}
 
 	/**
@@ -136,7 +170,7 @@ class AdvancedModulesModelModules extends JModelList
 	protected function getStoreId($id = '')
 	{
 		// Compile the store id.
-		$id .= ':' . $this->getState('filter.search');
+		$id .= ':' . trim($this->getState('filter.search'));
 		$id .= ':' . $this->getState('filter.access');
 		$id .= ':' . $this->getState('filter.published');
 		$id .= ':' . $this->getState('filter.position');
@@ -158,8 +192,8 @@ class AdvancedModulesModelModules extends JModelList
 	 */
 	protected function _getList($query, $limitstart = 0, $limit = 0)
 	{
-		$ordering = strtolower($this->getState('list.ordering', 'ordering'));
-		$orderDirn = strtoupper($this->getState('list.direction', 'ASC'));
+		$ordering = strtolower($this->getState('list.ordering'));
+		$orderDirn = strtoupper($this->getState('list.direction'));
 
 		if (in_array($ordering, array('pages', 'name')))
 		{
@@ -378,7 +412,7 @@ class AdvancedModulesModelModules extends JModelList
 		}
 
 		// Filter by search in title
-		$search = $this->getState('filter.search');
+		$search = trim($this->getState('filter.search'));
 		if (!empty($search))
 		{
 			if (stripos($search, 'id:') === 0)
@@ -410,7 +444,7 @@ class AdvancedModulesModelModules extends JModelList
 		{
 			$query->where('a.published = ' . (int) $published);
 		}
-		elseif ($published === '')
+		elseif ($published == '')
 		{
 			$query->where('(a.published IN (0, 1))');
 		}
@@ -458,5 +492,21 @@ class AdvancedModulesModelModules extends JModelList
 			->join('LEFT', '#__advancedmodules AS aa ON aa.moduleid = a.id');
 
 		return $query;
+	}
+
+	/**
+	 * Function that gets the config settings
+	 *
+	 * @return    Object
+	 */
+	protected function getConfig()
+	{
+		if (!isset($this->config))
+		{
+			require_once JPATH_PLUGINS . '/system/nnframework/helpers/parameters.php';
+			$parameters = NNParameters::getInstance();
+			$this->config = $parameters->getComponentParams('advancedmodules');
+		}
+		return $this->config;
 	}
 }

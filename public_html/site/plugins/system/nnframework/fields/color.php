@@ -4,7 +4,7 @@
  * Displays a textfield with a color picker
  *
  * @package         NoNumber Framework
- * @version         14.4.1
+ * @version         14.8.4
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
@@ -41,7 +41,7 @@ class nnFieldColor
 		$disabled = $this->get('disabled') ? ' disabled="disabled"' : '';
 
 		JHtml::stylesheet('nnframework/color.min.css', false, true);
-		JHtml::script('nnframework/color.min.js', false, true);
+		JFactory::getDocument()->addScriptVersion(JURI::root(true) . '/media/nnframework/js/color.min.js');
 
 		$this->value = strtolower(strtoupper(preg_replace('#[^a-z0-9]#si', '', $this->value)));
 

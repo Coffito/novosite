@@ -1,7 +1,7 @@
 <?php
 /**
  * @package         Advanced Module Manager
- * @version         4.13.1
+ * @version         4.16.6
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
@@ -105,7 +105,7 @@ class AdvancedModulesViewModules extends JViewLegacy
 		{
 			JToolbarHelper::title(JText::_('COM_MODULES_MANAGER_MODULES'), 'cube module');
 		} else {
-			JToolbarHelper::title(JText::_('AMM_ADVANCED_MODULES_MANAGER'), 'advancedmodulemanager icon-nonumber');
+			JToolbarHelper::title(JText::_('AMM_ADVANCED_MODULE_MANAGER'), 'advancedmodulemanager icon-nonumber');
 		}
 
 		if ($canDo->get('core.create'))

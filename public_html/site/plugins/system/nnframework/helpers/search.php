@@ -1,7 +1,7 @@
 <?php
 /**
  * @package          NoNumber Framework
- * @version         14.4.1
+ * @version         14.8.4
  *
  * @author           Peter van Westen <peter@nonumber.nl>
  * @link             http://www.nonumber.nl
@@ -18,7 +18,7 @@
  * @package     Joomla.Site
  * @subpackage  com_search
  *
- * @copyright   Copyright (C) 2005 - 2013 Open Source Matters, Inc. All rights reserved.
+ * @copyright   Copyright (C) 2005 - 2014 Open Source Matters, Inc. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
@@ -52,7 +52,7 @@ class SearchModelSearch extends JModelLegacy
 	 *
 	 * @var integer
 	 */
-	protected $_areas = null;
+	protected  $_areas = null;
 
 	/**
 	 * Pagination object
@@ -71,7 +71,7 @@ class SearchModelSearch extends JModelLegacy
 		parent::__construct();
 
 		//Get configuration
-		$app = JFactory::getApplication();
+		$app    = JFactory::getApplication();
 		$config = JFactory::getConfig();
 
 		// Get the pagination request variables
@@ -79,8 +79,8 @@ class SearchModelSearch extends JModelLegacy
 		$this->setState('limitstart', $app->input->get('limitstart', 0, 'uint'));
 
 		// Set the search parameters
-		$keyword = urldecode($app->input->getString('searchword'));
-		$match = $app->input->get('searchphrase', 'all', 'word');
+		$keyword  = urldecode($app->input->getString('searchword'));
+		$match    = $app->input->get('searchphrase', 'all', 'word');
 		$ordering = $app->input->get('ordering', 'newest', 'word');
 		$this->setSearch($keyword, $match, $ordering);
 
@@ -92,8 +92,7 @@ class SearchModelSearch extends JModelLegacy
 	/**
 	 * Method to set the search parameters
 	 *
-	 * @access    public
-	 *
+	 * @access	public
 	 * @param string search string
 	 * @param string mathcing option, exact|any|all
 	 * @param string ordering option, newest|oldest|popular|alpha|category
@@ -124,8 +123,7 @@ class SearchModelSearch extends JModelLegacy
 	/**
 	 * Method to set the search areas
 	 *
-	 * @access    public
-	 *
+	 * @access	public
 	 * @param   array  Active areas
 	 * @param   array  Search areas
 	 */
@@ -150,13 +148,11 @@ class SearchModelSearch extends JModelLegacy
 
 			JPluginHelper::importPlugin('search');
 			$dispatcher = JEventDispatcher::getInstance();
-			$results = $dispatcher->trigger(
-				'onContentSearch', array(
-					$this->getState('keyword'),
-					$this->getState('match'),
-					$this->getState('ordering'),
-					$areas['active']
-				)
+			$results = $dispatcher->trigger('onContentSearch', array(
+				$this->getState('keyword'),
+				$this->getState('match'),
+				$this->getState('ordering'),
+				$areas['active'])
 			);
 
 			$rows = array();
@@ -165,13 +161,11 @@ class SearchModelSearch extends JModelLegacy
 				$rows = array_merge((array) $rows, (array) $result);
 			}
 
-			$this->_total = count($rows);
+			$this->_total	= count($rows);
 			if ($this->getState('limit') > 0)
 			{
-				$this->_data = array_splice($rows, $this->getState('limitstart'), $this->getState('limit'));
-			}
-			else
-			{
+				$this->_data	= array_splice($rows, $this->getState('limitstart'), $this->getState('limit'));
+			} else {
 				$this->_data = $rows;
 			}
 
@@ -182,7 +176,7 @@ class SearchModelSearch extends JModelLegacy
 			{
 				if ($item->text != '')
 				{
-					$results = $dispatcher->trigger('onContentPrepare', array('com_content.article', &$item, &$params, 0));
+					$dispatcher->trigger('onContentPrepare', array('com_content.article', &$item, &$params, 0));
 					// strip html tags from title
 					$item->title = strip_tags($item->title);
 				}

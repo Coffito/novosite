@@ -1,5 +1,31 @@
 Novo site do coffito em Joomla
 
+Release v 0.6
+Date 20/08/2014
+
+Preparação para inserção dos componentes XMap (mapa do site) e GoogleCrumbs (Breadcrumbs)
+
+Novidades:
+
+	* Adição da pasta logs no arquivo .gitignore
+	* Criação de pastas para eleições
+	
+Plugin JCKEditor
+
+	* Adição do tamanho de fonte 13px para se adequar ao padrão escolhido pelo COFFITO.
+
+Ajustes:
+
+LSiteCoffito-48 Espelhar os menus de fisio e to
+LSiteCoffito-51 Formatar as resoluções dos símbolos (centralizar título)
+LSiteCoffito-50 Licitação (apenas as que estão em andamento)
+LSiteCoffito-54 Em definição de fisioterapia, Biologia deve ir para caixa baixa (biologia)
+LSiteCoffito-45 Inserir um novo banner para a campanha “Cursar especialização sem graduação completa é ilegal”. Migrar a página da campanha e linkar com o banner
+LSiteCoffito-46 Inserir o banner das eleições
+LSiteCoffito-47 Juntar formação acadêmica e profissional
+
+
+
 Release v 0.5
 Date: 14/08/2014
 
@@ -17,6 +43,37 @@ Componentes instalados nas versões anteriores permanecem:
 	* Acy Mailing
 	* News Show Pro G5
 	* Tags G5
+
+Ajustes
+
+	
+LSiteCoffito-32 MENU LEGISLAÇÃO – RESOLUÇÕES CONJUNTAS
+LSiteCoffito-29 MENU TERAPIA OCUPACIONAL – ESPECIALIDADES
+LSiteCoffito-39 Inserir o tópico Parâmetros Assistenciais no menu de Fisioterapia
+LSiteCoffito-40 Inserir o tópico Parâmetros Assistenciais no menu de Terapia Ocupacional
+LSiteCoffito-42 Tópico HONORÁRIOS – REFENRENCIAL NACIONAL
+LSiteCoffito-31 MENU LEGISLAÇÃO – MENU LEIS E DECRETOS
+LSiteCoffito-38 Perguntas Frequentes está com conteúdo em cor cinza
+LSiteCoffito-26 MENU FISIOTERAPIA – ESPECIALIDADES
+LSiteCoffito-17 LINK MEMÓRIA COFFITO: letras do link estão hachurado…
+LSiteCoffito-35 PERGUNTAS FREQUENTES
+LSiteCoffito-34 ACESSO RESTRITO
+LSiteCoffito-28 MENU TERAPIA OCUPACIONAL – FORMAÇÃO ACADÊMICA
+LSiteCoffito-27 MENU FISITOERAPIA – JORNADA DE TRABALHO
+LSiteCoffito-25 LINK CBO TEXTO DA DESCRIÇÃO SUMÁRIA NÃO ESTA JUSTIFICADO
+LSiteCoffito-13 Link CREFITOs - padronização nos estilos da página
+LSiteCoffito-23 NA REGULAMENTAÇÃO COLOCAR A PALAVRA FISIOTERAPIA EM CAIXA ALTA SEGUINDO PADRÃO DO TEXTO
+LSiteCoffito-22 FORMATAR TEXTO RESOLUÇÃO DO LINK SIMBOLO DA FISIOTERAPIA, A PARTE QUE TRATA DO ‘DISPÕE”ESTA MAL FORMATADO
+LSiteCoffito-24 NA DEFINIÇÃO DA FISIOTERAPIA COLOCAR NO TÍTULO DEFINIÇÃO DE FISIOTERAPIA E AREAS DE ATUAÇÃO - JUNTAR
+LSiteCoffito-18 LINK MEMÓRIA COFFITO: letras do link estão hachurado…
+LSiteCoffito-11 Link Sindicatos - Formatação do campo telefone
+LSiteCoffito-5  Links úteis - sessões "No Brasil" e "No exterior"
+LSiteCoffito-14 Link CREFITOs - Atualização do colegiado eleito CREFITOs 4 e 7
+LSiteCoffito-6  Links Úteis - Padronizar tamanho e cor
+LSiteCoffito-7  Links associações - padronizar tamanho, cor e texto dos títulos
+LSiteCoffito-2  Rever link do sindicato
+LSiteCoffito-15 LINK ASSESSORIA TÉCNICA: retirar o Hachurado dos textos (não consegui alterar…)
+LSiteCoffito-16 LINK LICITAÇÃO: FONTE E COR da Fonte esta fora do padrão definido na Ata da Comissão
 
 
 --- Versões anteriores

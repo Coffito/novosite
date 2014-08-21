@@ -1,10 +1,9 @@
 <?php
 /**
  * Main Plugin File
- * Does all the magic!
  *
  * @package         NoNumber Framework
- * @version         14.4.1
+ * @version         14.8.4
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
@@ -17,16 +16,8 @@ defined('_JEXEC') or die;
 if (JFactory::getApplication()->isAdmin())
 {
 	// load the NoNumber Framework language file
-	JFactory::getLanguage()->load('plg_system_nnframework', JPATH_ADMINISTRATOR);
-}
-
-if (JFactory::getApplication()->isSite() && JFactory::getApplication()->input->get('option') == 'com_search')
-{
-	$classes = get_declared_classes();
-	if (!in_array('SearchModelSearch', $classes) && !in_array('SearchModelSearch', $classes))
-	{
-		require_once JPATH_PLUGINS . '/system/nnframework/helpers/search.php';
-	}
+	require_once JPATH_PLUGINS . '/system/nnframework/helpers/functions.php';
+	NNFrameworkFunctions::loadLanguage('plg_system_nnframework');
 }
 
 /**
@@ -34,33 +25,10 @@ if (JFactory::getApplication()->isSite() && JFactory::getApplication()->input->g
  */
 class plgSystemNNFramework extends JPlugin
 {
-	function __construct(&$subject, $config)
+	public function onAfterRoute()
 	{
-		parent::__construct($subject, $config);
+		$this->loadSearchHelper();
 
-		if (JFactory::getApplication()->isSite())
-		{
-			return;
-		}
-
-		if (in_array(
-			JFactory::getApplication()->input->get('option'),
-			array(
-				'com_advancedmodules',
-				'com_contenttemplater',
-				'com_nonumbermanager',
-				'com_rereplacer',
-				'com_snippets',
-			)
-		)
-		)
-		{
-			JFactory::getDocument()->addScriptDeclaration('var is_nn = 1;');
-		}
-	}
-
-	function onAfterRoute()
-	{
 		if (!JFactory::getApplication()->input->getInt('nn_qp', 0))
 		{
 			return;
@@ -68,6 +36,26 @@ class plgSystemNNFramework extends JPlugin
 
 		// Include the Helper
 		require_once JPATH_PLUGINS . '/system/nnframework/helper.php';
-		$this->helper = new plgSystemNNFrameworkHelper;
+		$helper = new plgSystemNNFrameworkHelper;
+
+		$helper->render();
+	}
+
+	function loadSearchHelper()
+	{
+		// Only in frontend search component view
+		if (!JFactory::getApplication()->isSite() || JFactory::getApplication()->input->get('option') != 'com_search')
+		{
+			return;
+		}
+
+		$classes = get_declared_classes();
+
+		if (in_array('SearchModelSearch', $classes) || in_array('searchmodelsearch', $classes))
+		{
+			return;
+		}
+
+		require_once JPATH_PLUGINS . '/system/nnframework/helpers/search.php';
 	}
 }

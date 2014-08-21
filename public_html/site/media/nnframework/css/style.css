@@ -2,7 +2,7 @@
  * Main stylesheet
  *
  * @package         NoNumber Framework
- * @version         14.4.1
+ * @version         14.8.4
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
@@ -13,7 +13,7 @@
  * Stylesheet for font faces
  *
  * @package         NoNumber Framework
- * @version         14.4.1
+ * @version         14.8.4
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
@@ -88,6 +88,9 @@
 .icon-advancedmodulemanager:before {
   content: "\e003";
 }
+.icon-advancedtemplatemanager:before {
+  content: "\e015";
+}
 .icon-articlesanywhere:before {
   content: "\e004";
 }
@@ -112,7 +115,11 @@
 .icon-emailprotector:before {
   content: "\e00b";
 }
-.icon-modals:before {
+.icon-iplogin:before {
+  content: "\e016";
+}
+.icon-modals:before,
+.icon-modalizer:before {
   content: "\e00c";
 }
 .icon-modulesanywhere:before {
@@ -344,6 +351,9 @@ div.nn_well h4 {
 .header .icon-nonumber:before {
   font-size: 20px !important;
 }
+.header .status .icon-nonumber:before {
+  font-size: 16px !important;
+}
 .icon-back:before {
   content: "\e008";
 }
@@ -373,8 +383,29 @@ div.nn_well h4 {
   width: 16px !important;
   height: 16px !important;
 }
-.js-stools-clientid {
-  padding-top: 2px;
+body:not(.tpl_nonumber) .j-main-container .chzn-container-single .chzn-single {
+  padding: 2px 12px;
+}
+body:not(.tpl_nonumber) .chzn-container-single .chzn-single div {
+  width: 20px;
+}
+body:not(.tpl_nonumber) .chzn-container-single .chzn-single div b {
+  background: none;
+  display: inline-block;
+  width: 0;
+  height: 0;
+  vertical-align: top;
+  border-top: 4px solid #000000;
+  border-right: 4px solid transparent;
+  border-left: 4px solid transparent;
+  content: "";
+  margin-top: 12px;
+}
+body:not(.tpl_nonumber) .chzn-container-active.chzn-with-drop .chzn-single div b {
+  border-top: none;
+  border-bottom: 4px solid #000000;
+  border-right: 4px solid transparent;
+  border-left: 4px solid transparent;
 }
 .chzn-small {
   width: 120px;
@@ -460,4 +491,7 @@ div.chzn-container#advancedparams_color_chzn {
 .btn-group-yesno-reverse .active.btn-danger:active,
 .btn-group-yesno-reverse .active.btn-danger.active {
   background-color: #408140 \9;
+}
+.thumbnail-small > .thumbnail > img {
+  max-width: 40px;
 }

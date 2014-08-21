@@ -3,7 +3,7 @@
  * NoNumber Framework Helper File: Assignments: Users
  *
  * @package         NoNumber Framework
- * @version         14.4.1
+ * @version         14.8.4
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
@@ -36,8 +36,6 @@ class NNFrameworkAssignmentsUsers
 
 	function passUsers(&$parent, &$params, $selection = array(), $assignment = 'all')
 	{
-		$user = JFactory::getUser();
-
-		return $parent->passSimple($user->get('id'), $selection, $assignment);
+		return $parent->passSimple(JFactory::getUser()->get('id'), $selection, $assignment);
 	}
 }

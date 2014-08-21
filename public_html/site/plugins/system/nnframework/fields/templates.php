@@ -4,7 +4,7 @@
  * Displays a select box of templates
  *
  * @package         NoNumber Framework
- * @version         14.4.1
+ * @version         14.8.4
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
@@ -13,8 +13,6 @@
  */
 
 defined('_JEXEC') or die;
-
-require_once JPATH_PLUGINS . '/system/nnframework/helpers/text.php';
 
 class JFormFieldNN_Templates extends JFormField
 {
@@ -49,7 +47,12 @@ class JFormFieldNN_Templates extends JFormField
 			}
 		}
 
-		return nnHtml::selectlist($options, $this->name, $this->value, $this->id, $size, $multiple, $attribs);
+		// fix old '::' separator and change it to '--'
+		$value = json_encode($this->value);
+		$value = str_replace('::', '--', $value);
+		$value = (array) json_decode($value);
+
+		return nnHtml::selectlist($options, $this->name, $value, $this->id, $size, $multiple, $attribs);
 	}
 
 	protected function getTemplates()
@@ -79,10 +82,8 @@ class JFormFieldNN_Templates extends JFormField
 			foreach ($styles as $style)
 			{
 				$template = $style->template;
-				$lang->load('tpl_' . $template . '.sys', JPATH_SITE, null, false, false)
-				|| $lang->load('tpl_' . $template . '.sys', JPATH_SITE . '/templates/' . $template, null, false, false)
-				|| $lang->load('tpl_' . $template . '.sys', JPATH_SITE, $lang->getDefault(), false, false)
-				|| $lang->load('tpl_' . $template . '.sys', JPATH_SITE . '/templates/' . $template, $lang->getDefault(), false, false);
+				$lang->load('tpl_' . $template . '.sys', JPATH_SITE)
+				|| $lang->load('tpl_' . $template . '.sys', JPATH_SITE . '/templates/' . $template);
 				$name = JText::_($style->name);
 
 				// Initialize the group if necessary.
@@ -92,7 +93,7 @@ class JFormFieldNN_Templates extends JFormField
 					$groups[$template][] = JHtml::_('select.option', $template, $name);
 				}
 
-				$groups[$template][] = JHtml::_('select.option', $template . '::' . $style->id, $style->title);
+				$groups[$template][] = JHtml::_('select.option', $template . '--' . $style->id, $style->title);
 			}
 		}
 

@@ -3,8 +3,30 @@
 	<fieldset name="default" label="AMM_DEFAULT_SETTINGS">
 		<field name="@loadlanguage" type="nn_loadlanguage" extension="com_modules" />
 		<field name="list_title" type="list" default="0" label="AMM_LIST_TITLE" description="AMM_LIST_TITLE_DESC">
-			<option value="0">AMM_ADVANCED_MODULES_MANAGER</option>
+			<option value="0">AMM_ADVANCED_MODULE_MANAGER</option>
 			<option value="1">COM_MODULES_MANAGER_MODULES</option>
+		</field>
+		<field name="default_ordering" type="list" default="a.title ASC" label="NN_DEFAULT_ORDERING" description="NN_DEFAULT_ORDERING_DESC">
+			<option value="ordering ASC">NN_HEADING_ORDERING_ASC</option>
+			<option value="ordering DESC">NN_HEADING_ORDERING_DESC</option>
+			<option value="a.published ASC">NN_HEADING_STATUS_ASC</option>
+			<option value="a.published DESC">NN_HEADING_STATUS_DESC</option>
+			<option value="color ASC">NN_HEADING_COLOR_ASC</option>
+			<option value="color DESC">NN_HEADING_COLOR_DESC</option>
+			<option value="a.title ASC">NN_HEADING_TITLE_ASC</option>
+			<option value="a.title DESC">NN_HEADING_TITLE_DESC</option>
+			<option value="position ASC">NN_HEADING_POSITION_ASC</option>
+			<option value="position DESC">NN_HEADING_POSITION_DESC</option>
+			<option value="name ASC">NN_HEADING_TYPE_ASC</option>
+			<option value="name DESC">NN_HEADING_TYPE_DESC</option>
+			<option value="pages ASC">NN_HEADING_PAGES_ASC</option>
+			<option value="pages DESC">NN_HEADING_PAGES_DESC</option>
+			<option value="a.access ASC">NN_HEADING_ACCESS_ASC</option>
+			<option value="a.access DESC">NN_HEADING_ACCESS_DESC</option>
+			<option value="language ASC">NN_HEADING_LANGUAGE_ASC</option>
+			<option value="language DESC">NN_HEADING_LANGUAGE_DESC</option>
+			<option value="a.id ASC">NN_HEADING_ID_ASC</option>
+			<option value="a.id DESC">NN_HEADING_ID_DESC</option>
 		</field>
 		<field name="default_state" type="list" class="chzn-color-state" default="1" label="AMM_DEFAULT_STATE" description="AMM_DEFAULT_STATE_DESC">
 			<option value="0">JUNPUBLISHED</option>
@@ -18,6 +40,9 @@
 			<option value="0">JNO</option>
 			<option value="1">JYES</option>
 		</field>
+		<field name="@toggler_default_a" type="nn_toggler" param="show_color" value="1" />
+		<field name="main_colors" type="textarea" rows="4" default="none,#049cdb,#46a546,#9d261d,#ffc40d,#f89406,#c3325f,#7a43b6,#ffffff,#999999,#555555,#000000" label="AMM_COLORS" description="AMM_COLORS_DESC" />
+		<field name="@toggler_default_b" type="nn_toggler" />
 		<field name="show_hideempty" type="radio" class="btn-group btn-group-yesno" default="1" label="AMM_SHOW_HIDE_IF_EMPTY" description="AMM_SHOW_HIDE_IF_EMPTY_DESC">
 			<option value="0">JNO</option>
 			<option value="1">JYES</option>
@@ -103,14 +128,7 @@
 		<field name="@notice_show_assignto_php" type="nn_plaintext" label="NN_PHP" description="AMM_SHOW_PUBLISHING_OPTION" default="NN_ONLY_AVAILABLE_IN_PRO" />
 	</fieldset>
 
-	<fieldset name="permissions" label="JCONFIG_PERMISSIONS_LABEL" description="JCONFIG_PERMISSIONS_DESC">
-		<field
-			name="rules"
-			type="rules"
-			label="JCONFIG_PERMISSIONS_LABEL"
-			filter="rules"
-			validate="rules"
-			component="com_modules"
-			section="component" />
+	<fieldset name="notice_permissions" label="JCONFIG_PERMISSIONS_LABEL">
+		<field name="@notice_rules" type="note" class="alert alert-info" description="AMM_USE_CORE_RULES" />
 	</fieldset>
 </config>

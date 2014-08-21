@@ -4,7 +4,7 @@
  * Displays an error if given file is not found
  *
  * @package         NoNumber Framework
- * @version         14.4.1
+ * @version         14.8.4
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
@@ -31,7 +31,7 @@ class JFormFieldNN_Dependency extends JFormField
 		$this->params = $this->element->attributes();
 
 		JHtml::_('jquery.framework');
-		JHtml::script('nnframework/script.min.js', false, true);
+		JFactory::getDocument()->addScriptVersion(JURI::root(true) . '/media/nnframework/js/script.min.js');
 
 		$file = $this->get('file');
 		if (!$file)

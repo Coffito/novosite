@@ -1,7 +1,7 @@
 <?php
 /**
  * @package         Advanced Module Manager
- * @version         4.13.1
+ * @version         4.16.6
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
@@ -59,7 +59,7 @@ class AdvancedModulesViewModule extends JViewLegacy
 		if (preg_match('#_gk[1-9]#', $this->item->module))
 		{
 			// Set message for Gavick modules
-			JFactory::getApplication()->enqueueMessage(JText::sprintf(html_entity_decode(JText::_('AMM_MODULE_INCOMPATIBLE')), 'index.php?option=com_modules&task=module.edit&id=' . (int) $this->item->id), 'warning');
+			JFactory::getApplication()->enqueueMessage(JText::sprintf(html_entity_decode(JText::_('AMM_MODULE_INCOMPATIBLE')), 'index.php?option=com_modules&force=1&task=module.edit&id=' . (int) $this->item->id), 'warning');
 		}
 
 		$this->addToolbar();
@@ -114,11 +114,7 @@ class AdvancedModulesViewModule extends JViewLegacy
 		$checkedOut	= !($this->item->checked_out == 0 || $this->item->checked_out == $user->get('id'));
 		$canDo		= $this->canDo;
 
-		$title = $this->item->module;
-		if ($this->item->xml)
-		{
-			$title = JText::_((string) $this->item->xml->name) . ' [' . $title . ']';
-		}
+		$title = $this->item->title. ' [' . $this->item->module . ']';
 		JToolbarHelper::title(JText::sprintf('AMM_MODULE_EDIT', $title), 'advancedmodulemanager icon-nonumber');
 
 		// For new records, check the create permission.

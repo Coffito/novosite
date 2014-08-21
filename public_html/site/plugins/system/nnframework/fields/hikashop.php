@@ -4,7 +4,7 @@
  * Displays a multiselectbox of available HikaShop categories / products
  *
  * @package         NoNumber Framework
- * @version         14.4.1
+ * @version         14.8.4
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
@@ -57,18 +57,16 @@ class JFormFieldNN_HikaShop extends JFormField
 		$size = (int) $this->get('size');
 		$multiple = $this->get('multiple');
 
-		if ($group == 'categories')
+		require_once JPATH_PLUGINS . '/system/nnframework/helpers/html.php';
+
+		switch ($group)
 		{
-			require_once JPATH_PLUGINS . '/system/nnframework/helpers/html.php';
+			case 'categories':
+				return nnHtml::selectlist($options, $this->name, $this->value, $this->id, $size, $multiple);
 
-			return nnHtml::selectlist($options, $this->name, $this->value, $this->id, $size, $multiple);
+			default:
+				return nnHtml::selectlistsimple($options, $this->name, $this->value, $this->id, $size, $multiple);
 		}
-
-		$attr = '';
-		$attr .= ' size="' . (int) $size . '"';
-		$attr .= $multiple ? ' multiple="multiple"' : '';
-
-		return JHtml::_('select.genericlist', $options, $this->name, trim($attr), 'value', 'text', $this->value, $this->id);
 	}
 
 	function getCategories()

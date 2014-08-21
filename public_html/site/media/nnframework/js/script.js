@@ -2,7 +2,7 @@
  * Main JavaScript file
  *
  * @package         NoNumber Framework
- * @version         14.4.1
+ * @version         14.8.4
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
@@ -191,9 +191,9 @@
 					}
 
 					let1 = num1[i].replace(/^[0-9]*(.*)/, '$1');
-					num1[i] = num1[i].toInt();
+					num1[i] = parseInt(num1[i]);
 					let2 = num2[i].replace(/^[0-9]*(.*)/, '$1');
-					num2[i] = num2[i].toInt();
+					num2[i] = parseInt(num2[i]);
 
 					if (num1[i] < num2[i]) {
 						return '<';
@@ -229,6 +229,23 @@
 				} else if (value) {
 					el.addClass('alert-success');
 				}
+			},
+
+			initCheckAlls: function(id, classname) {
+				$('#' + id).attr('checked', nnScripts.allChecked(classname));
+				$('input.' + classname).click(function(el) {
+					$('#' + id).attr('checked', nnScripts.allChecked(classname));
+				});
+			},
+
+			allChecked: function(classname) {
+				return $('input.' + classname + ':checkbox:not(:checked)').length < 1;
+			},
+
+			checkAll: function(checkbox, classname) {
+				var allchecked = nnScripts.allChecked(classname);
+				$(checkbox).attr('checked', !allchecked);
+				$('input.' + classname).attr('checked', !allchecked);
 			}
 		}
 	}

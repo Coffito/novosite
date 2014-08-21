@@ -1,7 +1,7 @@
 <?php
 /**
  * @package         Advanced Module Manager
- * @version         4.13.1
+ * @version         4.16.6
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
@@ -515,6 +515,12 @@ class AdvancedModulesModelModule extends JModelAdmin
 					$query->clear()
 						->delete('#__assets')
 						->where('name = ' . $db->quote('com_modules.module.' . (int) $pk));
+					$db->setQuery($query);
+					$db->execute();
+
+					$query->clear()
+						->delete('#__assets')
+						->where('name = ' . $db->quote('com_advancedmodules.module.' . (int) $pk));
 					$db->setQuery($query);
 					$db->execute();
 				}

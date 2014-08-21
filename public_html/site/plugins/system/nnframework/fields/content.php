@@ -4,7 +4,7 @@
  * Displays a multiselectbox of available categories / items
  *
  * @package         NoNumber Framework
- * @version         14.4.1
+ * @version         14.8.4
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
@@ -44,19 +44,15 @@ class JFormFieldNN_Content extends JFormField
 		$size = (int) $this->get('size');
 		$multiple = $this->get('multiple');
 
-		if ($group == 'categories')
-		{
-			require_once JPATH_PLUGINS . '/system/nnframework/helpers/html.php';
+		require_once JPATH_PLUGINS . '/system/nnframework/helpers/html.php';
 
-			return nnHtml::selectlist($options, $this->name, $this->value, $this->id, $size, $multiple);
-		}
-		else
+		switch ($group)
 		{
-			$attr = '';
-			$attr .= ' size="' . (int) $size . '"';
-			$attr .= $multiple ? ' multiple="multiple"' : '';
+			case 'categories':
+				return nnHtml::selectlist($options, $this->name, $this->value, $this->id, $size, $multiple);
 
-			return JHtml::_('select.genericlist', $options, $this->name, trim($attr), 'value', 'text', $this->value, $this->id);
+			default:
+				return nnHtml::selectlistsimple($options, $this->name, $this->value, $this->id, $size, $multiple);
 		}
 	}
 
@@ -90,12 +86,8 @@ class JFormFieldNN_Content extends JFormField
 			$options[] = JHtml::_('select.option', '-', '&nbsp;', 'value', 'text', 1);
 		}
 
-		$query->clear()
+		$query->clear('select')
 			->select('c.id, c.title, c.level, c.published, c.language')
-			->from('#__categories AS c')
-			->where('c.extension = ' . $this->db->quote('com_content'))
-			->where('c.parent_id > 0')
-			->where('c.published > -1')
 			->order('c.lft');
 
 		$this->db->setQuery($query);
@@ -119,10 +111,20 @@ class JFormFieldNN_Content extends JFormField
 	function getItems()
 	{
 		$query = $this->db->getQuery(true)
-			->select('i.id, i.title as name, i.language, c.title as cat, i.access as published')
+			->select('COUNT(*)')
 			->from('#__content AS i')
 			->join('LEFT', '#__categories AS c ON c.id = i.catid')
-			->where('i.access > -1')
+			->where('i.access > -1');
+		$this->db->setQuery($query);
+		$total = $this->db->loadResult();
+
+		if ($total > $this->max_list_count)
+		{
+			return -1;
+		}
+
+		$query->clear('select')
+			->select('i.id, i.title as name, i.language, c.title as cat, i.access as published')
 			->order('i.title, i.ordering, i.id');
 		$this->db->setQuery($query);
 		$list = $this->db->loadObjectList();

@@ -3,7 +3,7 @@
  * NoNumber Framework Helper File: Assignments: FlexiContent
  *
  * @package         NoNumber Framework
- * @version         14.4.1
+ * @version         14.8.4
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
@@ -56,8 +56,8 @@ class NNFrameworkAssignmentsFlexiContent
 			$parent->q->clear()
 				->select('t.name')
 				->from('#__flexicontent_tags_item_relations AS x')
-				->join('LEFT', '#__flexicontent_tags AS t ON t.id = x.id')
-				->where('x.item_id = ' . (int) $parent->params->id)
+				->join('LEFT', '#__flexicontent_tags AS t ON t.id = x.tid')
+				->where('x.itemid = ' . (int) $parent->params->id)
 				->where('t.published = 1');
 			$parent->db->setQuery($parent->q);
 			$tags = $parent->db->loadColumn();

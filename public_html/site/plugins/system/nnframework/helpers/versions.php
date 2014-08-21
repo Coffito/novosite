@@ -3,7 +3,7 @@
  * NoNumber Framework Helper File: VersionCheck
  *
  * @package         NoNumber Framework
- * @version         14.4.1
+ * @version         14.8.4
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
@@ -59,7 +59,7 @@ class NoNumberVersions
 		}
 
 		JHtml::_('jquery.framework');
-		JHtml::script('nnframework/script.min.js', false, true);
+		JFactory::getDocument()->addScriptVersion(JURI::root(true) . '/media/nnframework/js/script.min.js');
 		$url = 'download.nonumber.nl/extensions.php?j=3&e=' . $alias;
 		$script = "
 			jQuery(document).ready(function() {

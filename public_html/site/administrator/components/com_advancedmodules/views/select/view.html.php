@@ -1,7 +1,7 @@
 <?php
 /**
  * @package         Advanced Module Manager
- * @version         4.13.1
+ * @version         4.16.6
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
@@ -64,11 +64,9 @@ class AdvancedModulesViewSelect extends JViewLegacy
 		// Get the toolbar object instance
 		$bar = JToolBar::getInstance('toolbar');
 
-		// Cancel
-		$title = JText::_('JTOOLBAR_CANCEL');
-		$dhtml = "<button onClick=\"location.href='index.php?option=com_modules'\" class=\"btn\">
-					<span class=\"icon-remove\" title=\"$title\"></span>
-					$title</button>";
-		$bar->appendButton('Custom', $dhtml, 'new');
+		// Instantiate a new JLayoutFile instance and render the layout
+		$layout = new JLayoutFile('toolbar.cancelselect');
+
+		$bar->appendButton('Custom', $layout->render(array()), 'new');
 	}
 }

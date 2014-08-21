@@ -66,3 +66,4 @@
 2014-08-06T17:22:10+00:00	INFO	cookiefailure	Senha inválida
 2014-08-07T12:35:38+00:00	INFO	joomlafailure	Senha inválida
 2014-08-07T13:41:58+00:00	INFO	joomlafailure	Senha inválida
+2014-08-15T14:29:11+00:00	INFO	joomlafailure	Senha inválida

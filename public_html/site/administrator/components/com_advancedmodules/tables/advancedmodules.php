@@ -3,7 +3,7 @@
  * Table class: advancedmodules
  *
  * @package         Advanced Module Manager
- * @version         4.13.1
+ * @version         4.16.6
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
@@ -15,7 +15,7 @@ defined('_JEXEC') or die;
 
 class AdvancedModulesTable extends JTable
 {
-	function __construct(&$db)
+	public function __construct(&$db)
 	{
 		parent::__construct('#__advancedmodules', 'moduleid', $db);
 	}
@@ -76,26 +76,10 @@ class AdvancedModulesTable extends JTable
 	}
 }
 
-/* Fix for difference in JTable::_getAssetParentId method declaration between Joomla 3.1 and 3.2
- * This can be removed after support for Joomla 3.1 is ended
- */
-if (version_compare(JVERSION, '3.2', 'lt'))
+class AdvancedModulesTableAdvancedModules extends AdvancedModulesTable
 {
-	class AdvancedModulesTableAdvancedModules extends AdvancedModulesTable
+	protected function _getAssetParentId(JTable $table = null, $id = null)
 	{
-		protected function _getAssetParentId($table = null, $id = null)
-		{
-			return parent::getAssetParentId($table, $id);
-		}
-	}
-}
-else
-{
-	class AdvancedModulesTableAdvancedModules extends AdvancedModulesTable
-	{
-		protected function _getAssetParentId(JTable $table = null, $id = null)
-		{
-			return parent::getAssetParentId($table, $id);
-		}
+		return parent::getAssetParentId($table, $id);
 	}
 }

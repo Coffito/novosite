@@ -2,7 +2,7 @@
  * Main stylesheet
  *
  * @package         NoNumber Framework
- * @version         14.4.1
+ * @version         14.8.4
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
@@ -50,6 +50,9 @@ div.nn_well {
 .header .icon-nonumber:before {
 	font-size: 20px !important;
 }
+.header .status .icon-nonumber:before {
+	font-size: 16px !important;
+}
 .icon-back:before {
 	content: "\e008";
 }
@@ -84,9 +87,35 @@ div.nn_well {
 	height: 16px !important;
 }
 
-.js-stools-clientid {
-	padding-top: 2px;
+body:not(.tpl_nonumber) {
+	.j-main-container {
+		.chzn-container-single .chzn-single {
+			padding: 2px 12px;
+		}
+	}
+	.chzn-container-single .chzn-single div {
+		width: 20px;
+	}
+	.chzn-container-single .chzn-single div b {
+		background: none;
+		display: inline-block;
+		width: 0;
+		height: 0;
+		vertical-align: top;
+		border-top: 4px solid @black;
+		border-right: 4px solid transparent;
+		border-left: 4px solid transparent;
+		content: "";
+		margin-top: 12px;
+	}
+	.chzn-container-active.chzn-with-drop .chzn-single div b {
+		border-top: none;
+		border-bottom: 4px solid @black;
+		border-right: 4px solid transparent;
+		border-left: 4px solid transparent;
+	}
 }
+
 .chzn-small {
 	width: 120px;
 }
@@ -119,4 +148,8 @@ div.chzn-container#advancedparams_color_chzn {
 			.buttonBackground(@btnSuccessBackground, @btnSuccessBackgroundHighlight);
 		}
 	}
+}
+
+.thumbnail-small > .thumbnail > img {
+	max-width: 40px;
 }

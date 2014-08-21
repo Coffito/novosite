@@ -4,7 +4,7 @@
  * Displays a multiselectbox of available Akeeba Subsriptons levels
  *
  * @package         NoNumber Framework
- * @version         14.4.1
+ * @version         14.8.4
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
@@ -50,19 +50,15 @@ class JFormFieldNN_AkeebaSubs extends JFormField
 		$size = (int) $this->get('size');
 		$multiple = $this->get('multiple');
 
-		if ($group == 'categories')
-		{
-			require_once JPATH_PLUGINS . '/system/nnframework/helpers/html.php';
+		require_once JPATH_PLUGINS . '/system/nnframework/helpers/html.php';
 
-			return nnHtml::selectlist($options, $this->name, $this->value, $this->id, $size, $multiple);
-		}
-		else
+		switch ($group)
 		{
-			$attr = '';
-			$attr .= ' size="' . (int) $size . '"';
-			$attr .= $multiple ? ' multiple="multiple"' : '';
+			case 'categories':
+				return nnHtml::selectlist($options, $this->name, $this->value, $this->id, $size, $multiple);
 
-			return JHtml::_('select.genericlist', $options, $this->name, trim($attr), 'value', 'text', $this->value, $this->id);
+			default:
+				return nnHtml::selectlistsimple($options, $this->name, $this->value, $this->id, $size, $multiple);
 		}
 	}
 

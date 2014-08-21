@@ -1,7 +1,7 @@
 <?php
 /**
  * @package         Advanced Module Manager
- * @version         4.13.1
+ * @version         4.16.6
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
@@ -59,8 +59,8 @@ if (JFactory::getUser()->authorise('core.admin'))
 }
 
 JFactory::getDocument()->addScriptDeclaration($script);
-JHtml::script('nnframework/script.min.js', false, true);
-JHtml::script('nnframework/toggler.min.js', false, true);
+JFactory::getDocument()->addScriptVersion(JURI::root(true) . '/media/nnframework/js/script.min.js');
+JFactory::getDocument()->addScriptVersion(JURI::root(true) . '/media/nnframework/js/toggler.min.js');
 ?>
 
 <form action="<?php echo JRoute::_('index.php?option=com_advancedmodules&layout=edit&id=' . (int) $this->item->id); ?>" method="post" name="adminForm" id="module-form" class="form-validate">
@@ -159,7 +159,36 @@ JHtml::script('nnframework/toggler.min.js', false, true);
 				<?php echo JLayoutHelper::render('joomla.edit.global', $this); ?>
 				<fieldset class="form-vertical">
 					<?php if ($this->config->show_color) : ?>
-						<?php echo $this->render($this->assignments, 'color'); ?>
+						<div class="control-group">
+							<div class="control-label">
+								<label id="advancedparams_color-lbl" for="advancedparams_color" class="hasTooltip" title=""
+									data-original-title="<strong><?php echo addslashes(JText::_('AMM_COLOR')); ?></strong><br /><?php echo addslashes(JText::_('AMM_COLOR_DESC')); ?>">
+									<?php echo JText::_('AMM_COLOR'); ?>
+								</label>
+							</div>
+							<div class="controls">
+								<?php
+								include_once(JPATH_LIBRARIES . '/joomla/form/fields/color.php');
+								$colorfield = new JFormFieldColor;
+
+								$color = (isset($this->item->advancedparams['color']) && $this->item->advancedparams['color']) ? str_replace('##', '#', $this->item->advancedparams['color']) : 'none';
+								$element = new SimpleXMLElement(
+									'<field
+											name="advancedparams[color]"
+											id="advancedparams_color"
+											type="color"
+											control="simple"
+											default=""
+											colors="' . (isset($this->config->main_colors) ? $this->config->main_colors : '') . '"
+											split="4"
+											/>'
+								);
+								$element->value = $color;
+								$colorfield->setup($element, $color);
+								echo $colorfield->__get('input');
+								?>
+							</div>
+						</div>
 					<?php endif; ?>
 					<?php if ($this->item->client_id == 0 && $this->config->show_hideempty) : ?>
 						<?php echo $this->render($this->assignments, 'hideempty'); ?>

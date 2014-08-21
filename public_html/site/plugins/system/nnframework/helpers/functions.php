@@ -3,7 +3,7 @@
  * NoNumber Framework Helper File: Functions
  *
  * @package         NoNumber Framework
- * @version         14.4.1
+ * @version         14.8.4
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
@@ -18,7 +18,7 @@ defined('_JEXEC') or die;
  */
 class NNFrameworkFunctions
 {
-	var $_version = '14.4.1';
+	var $_version = '14.8.4';
 
 	public function getByUrl($url, $options = array())
 	{
@@ -65,26 +65,28 @@ class NNFrameworkFunctions
 
 	public function getContents($url, $fopen = 0)
 	{
-		$html = '';
 		if ((!$fopen || !ini_get('allow_url_fopen')) && function_exists('curl_init') && function_exists('curl_exec'))
 		{
-			$html = $this->curl($url);
-		}
-		else if (ini_get('allow_url_fopen'))
-		{
-			$file = @fopen($url, 'r');
-			if ($file)
-			{
-				$html = array();
-				while (!feof($file))
-				{
-					$html[] = fgets($file, 1024);
-				}
-				$html = implode('', $html);
-			}
+			return $this->curl($url);
 		}
 
-		return $html;
+		if (!ini_get('allow_url_fopen'))
+		{
+			return '';
+		}
+
+		if (!$file = @fopen($url, 'r'))
+		{
+			return '';
+		}
+
+		$html = array();
+		while (!feof($file))
+		{
+			$html[] = fgets($file, 1024);
+		}
+
+		return implode('', $html);
 	}
 
 	protected function curl($url)
@@ -227,6 +229,11 @@ class NNFrameworkFunctions
 				break;
 		}
 		return 0;
+	}
+
+	static function loadLanguage($extension = 'joomla', $basePath = JPATH_ADMINISTRATOR)
+	{
+		JFactory::getLanguage()->load($extension, $basePath);
 	}
 
 	static function xmlToObject($url, $root)

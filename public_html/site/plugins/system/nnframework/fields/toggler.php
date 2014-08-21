@@ -4,7 +4,7 @@
  * Adds slide in and out functionality to framework based on an framework value
  *
  * @package         NoNumber Framework
- * @version         14.4.1
+ * @version         14.8.4
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
  * @copyright       Copyright © 2014 NoNumber All Rights Reserved
@@ -61,8 +61,8 @@ class nnFieldToggler
 		$div = $this->get('div', 0);
 
 		JHtml::_('jquery.framework');
-		JHtml::script('nnframework/script.min.js', false, true);
-		JHtml::script('nnframework/toggler.min.js', false, true);
+		JFactory::getDocument()->addScriptVersion(JURI::root(true) . '/media/nnframework/js/script.min.js');
+		JFactory::getDocument()->addScriptVersion(JURI::root(true) . '/media/nnframework/js/toggler.min.js');
 
 		$param = preg_replace('#^\s*(.*?)\s*$#', '\1', $param);
 		$param = preg_replace('#\s*\|\s*#', '|', $param);

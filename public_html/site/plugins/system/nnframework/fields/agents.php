@@ -4,7 +4,7 @@
  * Displays a multiselectbox of different browsers
  *
  * @package         NoNumber Framework
- * @version         14.4.1
+ * @version         14.8.4
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
@@ -73,23 +73,16 @@ class JFormFieldNN_Agents extends JFormField
 			/* Browsers */
 			case 'browsers':
 				$agents[] = array('Chrome (' . JText::_('JALL') . ')', 'Chrome');
+				$agents[] = array('Chrome 37', 'Chrome/35.');
+				$agents[] = array('Chrome 36', 'Chrome/35.');
 				$agents[] = array('Chrome 35', 'Chrome/35.');
 				$agents[] = array('Chrome 34', 'Chrome/34.');
 				$agents[] = array('Chrome 33', 'Chrome/33.');
 				$agents[] = array('Chrome 32', 'Chrome/32.');
 				$agents[] = array('Chrome 31', 'Chrome/31.');
 				$agents[] = array('Chrome 30', 'Chrome/30.');
-				$agents[] = array('Chrome 29', 'Chrome/29.');
-				$agents[] = array('Chrome 28', 'Chrome/28.');
-				$agents[] = array('Chrome 27', 'Chrome/27.');
-				$agents[] = array('Chrome 26', 'Chrome/26.');
-				$agents[] = array('Chrome 25', 'Chrome/25.');
-				$agents[] = array('Chrome 24', 'Chrome/24.');
-				$agents[] = array('Chrome 23', 'Chrome/23.');
-				$agents[] = array('Chrome 22', 'Chrome/22.');
-				$agents[] = array('Chrome 21', 'Chrome/21.');
 				//$agents[] = array('Chrome 31-40', '#Chrome/(3[1-9]|40)\.#');
-				//$agents[] = array('Chrome 21-30', '#Chrome/(2[1-9]|30)\.#');
+				$agents[] = array('Chrome 21-30', '#Chrome/(2[1-9]|30)\.#');
 				$agents[] = array('Chrome 11-20', '#Chrome/(1[1-9]|20)\.#');
 				$agents[] = array('Chrome 1-10', '#Chrome/([1-9]|10)\.#');
 				$agents[] = array('Firefox (' . JText::_('JALL') . ')', 'Firefox');
@@ -153,11 +146,11 @@ class JFormFieldNN_Agents extends JFormField
 			$options[] = $option;
 		}
 
-		$attr = '';
-		$attr .= $this->get('size') ? ' size="' . (int) $this->get('size') . '"' : '';
-		$attr .= ' multiple="multiple"';
+		$size = (int) $this->get('size');
 
-		return JHtml::_('select.genericlist', $options, $this->name, trim($attr), 'value', 'text', $this->value, $this->id);
+		require_once JPATH_PLUGINS . '/system/nnframework/helpers/html.php';
+
+		return nnHtml::selectlistsimple($options, $this->name, $this->value, $this->id, $size, 1);
 	}
 
 	private function get($val, $default = '')

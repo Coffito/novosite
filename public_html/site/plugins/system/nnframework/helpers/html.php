@@ -4,7 +4,7 @@
  * extra JHTML functions
  *
  * @package         NoNumber Framework
- * @version         14.4.1
+ * @version         14.8.4
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
@@ -19,7 +19,7 @@ defined('_JEXEC') or die;
  */
 class nnHtml
 {
-	static function selectlist(&$options, $name, $value, $id, $size = 0, $multiple = 0)
+	static function selectlist(&$options, $name, $value, $id, $size = 0, $multiple = 0, $simple = 0)
 	{
 		if (empty($options))
 		{
@@ -74,13 +74,32 @@ class nnHtml
 
 		if (!$multiple)
 		{
+			$first_level = isset($options['0']->level) ? $options['0']->level : 0;
+			foreach ($options as &$option)
+			{
+				if (!isset($option->level))
+				{
+					continue;
+				}
+				$repeat = ($option->level - $first_level > 0) ? $option->level - $first_level : 0;
+				$option->text = str_repeat(' - ', $repeat) . $option->text;
+			}
 			$html = JHtml::_('select.genericlist', $options, $name, 'class="inputbox"', 'value', 'text', $value);
 
-			return preg_replace('#>\[\[\:(.*?)\:\]\]#si', ' style="\1">', $html);
+			return preg_replace('#>((?:\s*-\s*)*)\[\[\:(.*?)\:\]\]#si', ' style="\2">\1', $html);
+		}
+
+		if ($simple)
+		{
+			$attr = '';
+			$attr .= ' size="' . (int) $size . '"';
+			$attr .= $multiple ? ' multiple="multiple"' : '';
+
+			return JHtml::_('select.genericlist', $options, $name, trim($attr), 'value', 'text', $value, $id);
 		}
 
 		JHtml::stylesheet('nnframework/multiselect.min.css', false, true);
-		JHtml::script('nnframework/multiselect.min.js', false, true);
+		JFactory::getDocument()->addScriptVersion(JURI::root(true) . '/media/nnframework/js/multiselect.min.js');
 
 		$html = array();
 
@@ -178,9 +197,9 @@ class nnHtml
 			$item .= '</div>';
 			$html[] = $item;
 
-			if (!isset($o[$i + 1]))
+			if (!isset($o[$i + 1]) && $option->level > 0)
 			{
-				$html[] = str_repeat('</li></ul>', $option->level);
+				$html[] = str_repeat('</li></ul>', (int) $option->level);
 			}
 			$prevlevel = $option->level;
 		}
@@ -213,5 +232,10 @@ class nnHtml
 		$html = implode('', $html);
 
 		return preg_replace('#>\[\[\:(.*?)\:\]\]#si', ' style="\1">', $html);
+	}
+
+	static function selectlistsimple(&$options, $name, $value, $id, $size = 0, $multiple = 0)
+	{
+		return self::selectlist($options, $name, $value, $id, $size, $multiple, 1);
 	}
 }

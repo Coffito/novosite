@@ -1,7 +1,7 @@
 <?php
 /**
  * @package         Advanced Module Manager
- * @version         4.13.1
+ * @version         4.16.6
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
@@ -57,7 +57,7 @@ class AdvancedModulesModelPositions extends JModelList
 		$app = JFactory::getApplication('administrator');
 
 		// Load the filter state.
-		$search = $this->getUserStateFromRequest($this->context.'.filter.search', 'filter_search');
+		$search = trim($this->getUserStateFromRequest($this->context.'.filter.search', 'filter_search'));
 		$this->setState('filter.search', $search);
 
 		$published = $this->getUserStateFromRequest($this->context.'.filter.published', 'filter_published', '', 'string');
@@ -91,7 +91,7 @@ class AdvancedModulesModelPositions extends JModelList
 		if (!isset($this->items))
 		{
 			$lang            = JFactory::getLanguage();
-			$search          = $this->getState('filter.search');
+			$search          = trim($this->getState('filter.search'));
 			$state           = $this->getState('filter.state');
 			$clientId        = $this->getState('stfilter.client_id');
 			$filter_template = $this->getState('filter.template');

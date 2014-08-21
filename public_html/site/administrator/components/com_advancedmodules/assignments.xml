@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <config addfieldpath="/plugins/system/nnframework/fields">
-	<fieldset name="color">
-		<field name="color" type="color" control="simple" split="4" default="" label="AMM_COLOR" description="AMM_COLOR_DESC" />
-	</fieldset>
-
 	<fieldset name="hideempty">
 		<field name="hideempty" type="radio" class="btn-group btn-group-yesno" default="0" label="AMM_HIDE_IF_EMPTY" description="AMM_HIDE_IF_EMPTY_DESC">
 			<option value="0">JNO</option>
