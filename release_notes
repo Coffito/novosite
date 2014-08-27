@@ -1,5 +1,16 @@
 Novo site do coffito em Joomla
 
+Release v 0.7
+
+Inserção de eventos em agenda e em pauta a partir de agosto. Em pauta nos foi fornecido até 16/08 e agenda tem eventos até novembro.
+
+Novidadaes:
+
+	* Inserção do componente ReDJ (redirecionamento de url, permitindo esconder o acesso ao módulo de login na url amigável /login)
+	* Inserção do componente XMap para fazer o mapa do site
+	* Inserção do componente Googlecrumb para usar breadcrumbs
+
+
 Release v 0.6
 Date 20/08/2014
 

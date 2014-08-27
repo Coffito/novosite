@@ -1,2 +1,4 @@
 AddHandler php53-script .php .php5 .php53 .pht .phtm .phtml
 suPHP_ConfigPath /home/coffito2/
+
+ErrorDocument 404 /site/
