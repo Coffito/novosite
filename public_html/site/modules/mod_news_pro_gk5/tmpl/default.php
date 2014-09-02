@@ -76,10 +76,10 @@ if($this->config['links_position'] != 'bottom' && $this->config['news_short_page
 				</div>
 			</div>
 		<?php endif; ?>
-		<?php if($this->config['news_short_pages'] > 0 && count($news_list_tab) > 0 ) : ?>
+		<?php if($this->config['news_short_pages'] > 0 && count($news_list_tab) == 0 ) : ?>
 		<div class="nspLinksWrap<?php echo ' '.$this->config['links_position']; ?>" style="width:<?php echo $links_width-0.1; ?>%;">
 			<div class="nspLinks" style="margin:<?php echo $this->config["links_margin"]; ?>;">
-				<?php if(count($news_list_tab) > 0) : ?>
+				<?php if(count($news_list_tab) == 0) : ?>
 				<div class="nspLinkScroll1">
 					<div class="nspLinkScroll2 nspPages<?php echo $this->config['news_short_pages']; ?>">
 						<?php for($j = 0; $j < count($news_list_tab); $j++) : ?>

@@ -1,5 +1,13 @@
 Novo site do coffito em Joomla
 
+Release v 0.8
+
+Alteração no módulo news_gk5_pro. Alterando o comportamento do controle de paginação para exibição do link leia mais. Ele sempre vai
+aparecer porque no if que testa o valor de $news_tab_list no arquivo modules/mod_news_pro_gk5/tmpl/default.php para exibir ou não
+o link, a comparação foi trocada de > 0 para == 0. Parece que o controle de paginação para saber se o usuário está na última página
+do slider não está funcionando.
+
+
 Release v 0.7
 
 Inserção de eventos em agenda e em pauta a partir de agosto. Em pauta nos foi fornecido até 16/08 e agenda tem eventos até novembro.
