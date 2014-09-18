@@ -3,7 +3,7 @@
  * NoNumber Framework Helper File: Functions
  *
  * @package         NoNumber Framework
- * @version         14.8.4
+ * @version         14.9.8
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
@@ -18,7 +18,7 @@ defined('_JEXEC') or die;
  */
 class NNFrameworkFunctions
 {
-	var $_version = '14.8.4';
+	var $_version = '14.9.8';
 
 	public function getByUrl($url, $options = array())
 	{
@@ -116,7 +116,7 @@ class NNFrameworkFunctions
 		}
 
 		//follow on location problems
-		if (ini_get('open_basedir') == '' && ini_get('safe_mode') != '1' && ini_get('safe_mode') != 'On')
+		if (!ini_get('safe_mode') && !ini_get('open_basedir'))
 		{
 			curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
 			$html = curl_exec($ch);
@@ -228,6 +228,7 @@ class NNFrameworkFunctions
 				}
 				break;
 		}
+
 		return 0;
 	}
 
@@ -275,13 +276,13 @@ class NNFrameworkFunctions
 	{
 		$defaults = array(
 			'namespaceSeparator' => ':', //you may want this to be something other than a colon
-			'attributePrefix' => '', //to distinguish between attributes and nodes with the same name
-			'alwaysArray' => array(), //array of xml tag names which should always become arrays
-			'autoArray' => true, //only create arrays for tags which appear more than once
-			'textContent' => 'value', //key used for the text content of elements
-			'autoText' => true, //skip textContent key if node has no attributes or child nodes
-			'keySearch' => false, //optional search and replace on tag and attribute names
-			'keyReplace' => false //replace values for above search values (as passed to str_replace())
+			'attributePrefix'    => '', //to distinguish between attributes and nodes with the same name
+			'alwaysArray'        => array(), //array of xml tag names which should always become arrays
+			'autoArray'          => true, //only create arrays for tags which appear more than once
+			'textContent'        => 'value', //key used for the text content of elements
+			'autoText'           => true, //skip textContent key if node has no attributes or child nodes
+			'keySearch'          => false, //optional search and replace on tag and attribute names
+			'keyReplace'         => false //replace values for above search values (as passed to str_replace())
 		);
 		$options = array_merge($defaults, $options);
 		$namespaces = $xml->getDocNamespaces();

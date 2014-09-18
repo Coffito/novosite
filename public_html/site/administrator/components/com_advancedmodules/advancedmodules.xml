@@ -2,8 +2,8 @@
 <extension version="3.2" type="component" method="upgrade">
 	<name>com_advancedmodules</name>
 	<description>COM_ADVANCEDMODULES_DESC</description>
-	<version>4.16.6FREE</version>
-	<creationDate>August 2014</creationDate>
+	<version>4.16.7FREE</version>
+	<creationDate>September 2014</creationDate>
 	<author>NoNumber (Peter van Westen)</author>
 	<authorEmail>peter@nonumber.nl</authorEmail>
 	<authorUrl>http://www.nonumber.nl</authorUrl>

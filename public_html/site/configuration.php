@@ -32,7 +32,7 @@ class JConfig {
 	public $mailonline = '1';
 	public $mailer = 'smtp';
 	public $mailfrom = 'ti@coffito.org.br';
-	public $fromname = 'COFFITO';
+	public $fromname = 'TI';
 	public $sendmail = '/usr/sbin/sendmail';
 	public $smtpauth = '1';
 	public $smtpuser = 'ti@coffito.org.br';

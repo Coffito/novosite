@@ -2,7 +2,7 @@
  * Stylesheet for font faces
  *
  * @package         NoNumber Framework
- * @version         14.8.4
+ * @version         14.9.8
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
@@ -54,10 +54,9 @@
 }
 
 .icon-nonumber {
-	width: 16px !important;
 	&:before {
 		font-family: 'NoNumber' !important;
-		font-size: 16px !important;
+		font-size: 14.2px !important;
 	}
 }
 .btn .icon-nonumber {
@@ -114,6 +113,9 @@
 	}
 	&dbreplacer:before {
 		content: "\e00a";
+	}
+	&dummycontent:before {
+		content: "\e017";
 	}
 	&emailprotector:before {
 		content: "\e00b";

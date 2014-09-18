@@ -3,7 +3,7 @@
  * Main Plugin File
  *
  * @package         Advanced Module Manager
- * @version         4.16.6
+ * @version         4.16.7
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
