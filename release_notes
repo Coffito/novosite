@@ -1,5 +1,12 @@
 Novo site do coffito em Joomla
 
+Release v 0.9
+
+	* Alteração do banner inferior consulta pública.
+	* Diminuindo a distância entre o menu e o início do texto para acomadar a inserção do breadcrumb.
+	* Forçando a fonte padrão ser arial e fonte tamanho 13px.
+
+
 Release v 0.8
 
 Alteração no módulo news_gk5_pro. Alterando o comportamento do controle de paginação para exibição do link leia mais. Ele sempre vai
