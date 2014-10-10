@@ -16,7 +16,7 @@
 	if ($searchTerm) {
 			
 			$sql = "SELECT SQL_CALC_FOUND_ROWS content.title, content.id FROM coffito21.ghtpa_categories as cat INNER JOIN 
-			coffito21.ghtpa_content as content ON cat.id = content.catid WHERE cat.id in (16,17,18,19,20) and (content.title like '%$searchTerm%' or content.fulltext like '%$searchTerm%')";
+			coffito21.ghtpa_content as content ON cat.id = content.catid WHERE cat.id in (16,17,18,19,20) and (content.title like '%$searchTerm%' or content.fulltext like '%$searchTerm%' or content.introtext like '%$searchTerm%' )";
 						
 			
 	} else {

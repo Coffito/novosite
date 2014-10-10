@@ -1,5 +1,21 @@
 Novo site do coffito em Joomla
 
+Release v 1.1
+
+	* Adição de função de validação dos formulário da seção Projetos de lei e Fale Conosco.
+	* Adição da link para facebook, curtir e compartilhar notícias
+	* No webservice para a aplicação de consulta de legislação foi alterado o sql para consultar também no campo introtext e
+	não apenas nos campos title e fulltext
+	* Ajustes no css para os botões imprimir e e-mail dos artigos fossem apresentados fora de um menu de catraca padrão e sempre
+	ficassem visíveis.
+	* Inserção de banner rotativo na página de agenda.
+
+
+Release v 1.0
+
+	Lançamento do site. Houve apenas inclusões de artigos e ajustes de configuração do banco.
+
+
 Release v 0.9
 
 	* Alteração do banner inferior consulta pública.

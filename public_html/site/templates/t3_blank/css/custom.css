@@ -2,7 +2,7 @@ body {
 	color: #000;
 	background-color: #FFF;
 	font-family: Arial, Helvetica, sans-serif;
-	font-size: 13px;
+	font-size: 14px;
 	text-align: justify;
 }
 
@@ -47,4 +47,25 @@ td p div body {
 
 .logo-img {
     height: auto;
+}
+
+.btn-group > .dropdown-toggle {
+	display: none;
+}
+
+.btn-group > .dropdown-menu {
+	display: inline;
+	margin-top: -10px;
+	border: 0;
+	padding: 0;
+}
+
+.btn-group > .dropdown-menu > li {
+	display: inline;
+}
+
+.btn-group > .dropdown-menu > li > a {
+	display: inline;
+	text-decoration: none;
+	padding: .2em 1em;
 }
